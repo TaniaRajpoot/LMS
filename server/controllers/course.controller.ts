@@ -75,6 +75,9 @@ export const editCourse = CatchAsyncError(async (req: Request, res: Response, ne
             $set: data
         }, { new: true });
 
+        await redis.set(courseId, JSON.stringify(course));
+        await redis.del("all-courses");
+
         res.status(201).json({
             success: true,
             course,
@@ -102,7 +105,8 @@ export const getSingleCourse = CatchAsyncError(async (req: Request, res: Respons
 
             const course = await CourseModel.findById(courseId).select("-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links");
 
-            await redis.set(courseId, JSON.stringify(course));
+
+            await redis.set(courseId, JSON.stringify(course), "EX", 604800); //7 days 
 
 
             res.status(200).json({
@@ -127,6 +131,7 @@ export const getAllCourses = CatchAsyncError(async (req: Request, res: Response,
             });
         }else{
         const courses = await CourseModel.find().select("-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links");
+        await redis.set("all-courses", JSON.stringify(courses));
         res.status(200).json({
             success: true,
             courses,
@@ -415,6 +420,7 @@ export const deleteCourse = CatchAsyncError(async(req:Request,res:Response,next:
         }
         await course.deleteOne({id});
         await redis.del(id);
+        await redis.del("all-courses");
         res.status(200).json({
             success:true,
             message:"Course deleted successfully",

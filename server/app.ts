@@ -9,6 +9,8 @@ import userRouter from "./routes/user.route";
 import courseRouter from "./routes/course.route";
 import orderRouter from "./routes/order.route";
 import notificationRoute from "./routes/notification.route";
+import analyticsRouter from "./routes/analytics.route";
+import layoutRouter from "./routes/layout.route";
 
 
 //body parser 
@@ -24,7 +26,7 @@ app.use(cors({
 }))
 
 //routes
-app.use("/api/v1", userRouter,courseRouter,orderRouter,notificationRoute)
+app.use("/api/v1", userRouter,courseRouter,orderRouter,notificationRoute,analyticsRouter,layoutRouter)
 
 
 //testing api 

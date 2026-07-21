@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-poppins: var(--font-poppins);
+  --font-josefin: var(--font-josefin);
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-poppins), sans-serif;
+  --font-poppins: var(--font-poppins), sans-serif;
+  --font-josefin: var(--font-josefin), sans-serif;
+  
+  --breakpoint-400px: 400px;
+  --breakpoint-800px: 800px;
+  --breakpoint-1000px: 1000px;
+  --breakpoint-1100px: 1100px;
+  --breakpoint-1200px: 1200px;
+  --breakpoint-1300px: 1300px;
+  --breakpoint-1500px: 1500px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}

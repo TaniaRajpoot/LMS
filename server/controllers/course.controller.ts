@@ -247,6 +247,7 @@ export const addAnswer = CatchAsyncError(async (req:Request,res:Response,next:Ne
         const question = courseContent?.questions?.find((item:any) => item._id.equals(questionId));
 
         if(!question){
+            
             return next (new ErrorHandler("invalid question id",400))
         }
         
